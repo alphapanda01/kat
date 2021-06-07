@@ -35,4 +35,4 @@ sudo make install
 ```
 
 ### Usage
-
+[![demo](https://asciinema.org/a/B7W9XaZdVzjL4NRZfktgCWl4Y.svg)](https://asciinema.org/a/B7W9XaZdVzjL4NRZfktgCWl4Y?autoplay=1)
