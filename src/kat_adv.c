@@ -116,7 +116,7 @@ void print_help(char *exec_name) {
 	printf("\t-t\t\tPrint tabs\n");
 	printf("\t-e\t\tPrint line ends\n");
 	printf("\t-n\t\tPrint line numbers\n");
-	printf("\t-A\t\tsimilar to -e -r -n\n");
+	printf("\t-A\t\tsimilar to -e -t\n");
 	printf("\t-v\t\tPrints version\n");
 	printf("\t-h\t\tPrints this help\n");
 }
@@ -160,7 +160,7 @@ void adv_print(FILE *f)  {
 
       if (LINE_ENDS || ALL) {
         printf("$");
-        (numline) ? printf("\n") : 0; // 0 - NULL
+        (LINE_NUM) ? 0 : printf("\n"); // 0 - NULL
       }
       if (LINE_NUM) {
         i++;
