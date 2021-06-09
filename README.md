@@ -1,4 +1,7 @@
 # Kat
+![version](https://img.shields.io/badge/version-0.69__v2-red?style=flat&logo=GNU)
+![build](https://img.shields.io/badge/build-Passing-green?style=flat) 
+
 > My rip-off of GNU cat
 
 ```
@@ -12,21 +15,17 @@ OPTIONS:
         -t              Print tabs
         -e              Print line ends
         -n              Print line numbers
-        -A              similar to -e -r -n
-        -v              Prints version
+        -A              similar to -e -t
+        -v              Prints versiona
         -h              Prints this help
+
 ```
 
 ### Install
-##### Version 0.69: Basic version (Literally nothing)
-``` 
-make 
-```
 
-
-##### Version 0.69_v2: The real ripoff (I procrastinate)
+#### build
 ```
-make kitty2
+make
 ```
 
 ##### Install in /usr/bin (don't use, unless dumb)
@@ -35,4 +34,8 @@ sudo make install
 ```
 
 ### Usage
+![Example](https://img.shields.io/badge/Example-asciinema-blue?style=flat&logo=asciinema)
+
 [![demo](https://asciinema.org/a/B7W9XaZdVzjL4NRZfktgCWl4Y.svg)](https://asciinema.org/a/B7W9XaZdVzjL4NRZfktgCWl4Y?autoplay=1)
+
+
