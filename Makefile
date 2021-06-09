@@ -1,8 +1,5 @@
 kitty: build src/kat.c 
-	$(CC) -Wall -Wextra -Werror -O3 src/kat.c -o bin/kat
-
-kitty2: build src/kat_adv.c 
-	$(CC) -Wall -Wextra -O3 src/kat_adv.c -o bin/kat
+	$(CC) -Wall -Wextra -O3 src/kat.c -o bin/kat
 
 clean:
 	@rm -rf bin/*
@@ -13,4 +10,7 @@ build:
 install: 
 	install bin/kat /usr/bin/
 
-.PHONY: clean
+tests: kitty 
+	./tests/run_tests.sh
+
+.PHONY: clean install

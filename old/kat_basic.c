@@ -3,24 +3,19 @@
 #include <stdlib.h> // for abort() exit() 
 #include <string.h> // for strcmp()
 
-#include <sys/stat.h> // for dir check
+#include <sys/stat.h>
 
 // An error macro
 #define err(A, MSG, ...) if(!A) {\
 	fprintf(stderr,"[ERROR] " MSG, ##__VA_ARGS__);\
 	exit(1); }
 
-#define KAT_VERSION "0.69_v2"
-
 // to fix few std C99 problem
 int getopt(int argc, char *const argv[], const char *optstring);
 
 void print_help(char *exec_name); 
 void print_version();
-
 void print_stdout(FILE *f); // prints the file to stdout
-void adv_print(FILE *f); // for more options
-
 void check_file(char* file_path, FILE *f); // checks 
 int isdirectory(char *path); 
 
@@ -28,11 +23,6 @@ int isdirectory(char *path);
 typedef enum {FALSE, TRUE} bool;
 #endif
 
-// The hated global vairables
-bool TAB = FALSE;
-bool LINE_NUM = FALSE;
-bool LINE_ENDS = FALSE;
-bool ALL = FALSE;
 
 int main(int argc, char *argv[]) {
 
@@ -47,7 +37,7 @@ int main(int argc, char *argv[]) {
 
 	int arg;
 
-	while((arg = getopt(argc, argv, ":vhtenA")) != -1) {
+	while((arg = getopt(argc, argv, ":vh")) != -1) {
 
 		switch(arg) {
 			case 'v':
@@ -56,18 +46,6 @@ int main(int argc, char *argv[]) {
 			case 'h':
 				print_help(argv[0]);
         exit(1);
-      case 't':
-        TAB = TRUE;
-        break;
-      case 'e':
-        LINE_ENDS = TRUE;
-        break;
-      case 'n':
-        LINE_NUM = TRUE;
-        break;
-      case 'A':
-        ALL = TRUE;
-        break;
 			case '?':
 				err(0,"unknown option '-%c'\n",optopt);
 				exit(1);
@@ -88,13 +66,7 @@ int main(int argc, char *argv[]) {
 		else {
 			FILE *f = fopen(fname , "r");
 			check_file(fname, f);
-      
-      if (TAB || LINE_NUM || LINE_ENDS || ALL) {
-        adv_print(f);
-      }
-      else {
-			  print_stdout(f);
-      }
+			print_stdout(f);
 		}
 	}
 
@@ -102,7 +74,7 @@ int main(int argc, char *argv[]) {
 }
 
 void print_version() {
-	printf("Kitty (My ripoff of cat) %s\n",KAT_VERSION);
+	printf("Kitty (My ripoff of cat) 0.69\n");
 	printf("\nCopyright (C) None\n");
 	printf("Written By: me\n");
 }
@@ -113,10 +85,6 @@ void print_help(char *exec_name) {
 
 	printf("When no input or '-' is provided, prints from stdin\n");
 	printf("OPTIONS:\n");
-	printf("\t-t\t\tPrint tabs\n");
-	printf("\t-e\t\tPrint line ends\n");
-	printf("\t-n\t\tPrint line numbers\n");
-	printf("\t-A\t\tsimilar to -e -t\n");
 	printf("\t-v\t\tPrints version\n");
 	printf("\t-h\t\tPrints this help\n");
 }
@@ -130,52 +98,6 @@ void print_stdout(FILE *f) {
 	while((c = fgetc(f)) != EOF) {
 		fputc(c,stdout);
 	}
-
-}
-
-void adv_print(FILE *f)  {
-
-	err(f,"Failed to open file\n");
-
-  int c;
-  int i;
-
-  int numline = 0;
-  if (LINE_NUM) {
-    i = 1;
-    numline = 1;
-  }
-
-  while((c = fgetc(f)) != EOF) {
-
-    if (numline == 1) {
-        printf("%6d ",i);
-        numline = 0;
-    }
-  
-    if(c == '\t' && (TAB || ALL)) {
-      printf("^I");
-    }
-    else if (c == '\n') {
-
-      if (LINE_ENDS || ALL) {
-        printf("$");
-        (LINE_NUM) ? 0 : printf("\n"); // 0 - NULL
-      }
-      if (LINE_NUM) {
-        i++;
-        fputc(c, stdout);
-        numline = 1;
-      }
-      if(!LINE_NUM && !LINE_ENDS) {
-        fputc(c, stdout); 
-      }
-    }
-    else {
-      fputc(c, stdout);
-    }
-
-  }
 
 }
 
