@@ -1,6 +1,6 @@
 # Kat
-![version](https://img.shields.io/badge/version-0.69__v2-red?style=flat&logo=GNU)
-![build](https://img.shields.io/badge/build-Passing-green?style=flat) 
+![version](https://img.shields.io/badge/version-0.7-green?style=flat&logo=GNU)
+![build](https://img.shields.io/badge/build-Randomly Failing-red?style=flat) 
 
 > My rip-off of GNU cat
 

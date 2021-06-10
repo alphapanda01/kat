@@ -10,7 +10,7 @@
 	fprintf(stderr,"[ERROR] " MSG, ##__VA_ARGS__);\
 	exit(1); }
 
-#define KAT_VERSION "0.69_v2"
+#define KAT_VERSION "0.7"
 
 // to fix few std C99 problem
 int getopt(int argc, char *const argv[], const char *optstring);
@@ -89,12 +89,13 @@ int main(int argc, char *argv[]) {
 			FILE *f = fopen(fname , "r");
 			check_file(fname, f);
       
-      if (TAB || LINE_NUM || LINE_ENDS || ALL) {
-        adv_print(f);
-      }
-      else {
-			  print_stdout(f);
-      }
+      //if (TAB || LINE_NUM || LINE_ENDS || ALL) {
+      adv_print(f);
+      //}
+      //else {
+			//  print_stdout(f);
+      //}
+      fclose(f);
 		}
 	}
 

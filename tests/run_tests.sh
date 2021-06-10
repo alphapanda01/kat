@@ -6,10 +6,10 @@ echo "" > tests/tests.log
 
 if ! [ -x "$(command -v cat)" ]; then
     echo 'Error: cat is not installed.' >&2
-    exit 1
+    #exit 1
 fi
 
-tests=1
+tests=0
 
 for i in tests/*.txt
 do 
@@ -19,7 +19,7 @@ do
     ((tests+=1))
   else
     echo "failed test on file(normal test): $i"
-    exit 1
+    #exit 1
   fi
 
   # Tab print
@@ -34,7 +34,7 @@ do
     cat -T $i >> tests/tests.log
 
     echo "failed test on file(tab test): $i"
-    exit 1
+    #exit 1
   fi
 
   # Ends print
@@ -43,7 +43,7 @@ do
     ((tests+=1))
   else
     echo "failed test on file(ends test): $i"
-    exit 1
+    #exit 1
   fi
 
   # line number 
@@ -52,8 +52,14 @@ do
     ((tests+=1))
   else
     echo "failed test on file(ends test): $i"
-    exit 1
+    ##exit 1
   fi
 done
 
-echo "Passed all the tests"
+files=`ls -l tests/*.txt | wc -l`
+
+if [ $(( $files * 4 )) -eq $tests ]; then
+  echo "Passed all the tests"
+else
+  echo "Passed: $tests, Failed: $(( $files*4 - $tests ))"
+fi
