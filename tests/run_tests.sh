@@ -1,3 +1,4 @@
+#!/bin/bash
 # No. of tests: 4 per file
 
 echo "Running tests: "
@@ -61,5 +62,7 @@ files=`ls -l tests/*.txt | wc -l`
 if [ $(( $files * 4 )) -eq $tests ]; then
   echo "Passed all the tests"
 else
-  echo "Passed: $tests, Failed: $(( $files*4 - $tests ))"
+  failed=$(($files*4 - $tests))
+  echo "Passed: $tests, Failed: $failed"
+  exit $failed
 fi
