@@ -19,6 +19,7 @@ int getopt(int argc, char *const argv[], const char *optstring);
 void print_help(char *exec_name); 
 void print_version();
 
+int file_func(char *fname); // this will call the below 2 func
 void print_stdout(FILE *f); // prints the file to stdout
 void adv_print(FILE *f); // for more options
 
@@ -99,64 +100,41 @@ int main(int argc, char *argv[]) {
 
 	}
 
-  if (TAB || LINE_NUM || LINE_ENDS || ALL) {
+  if (optind < argc) {
+	  char *fname;
+    bool pstdin = FALSE; // print from stdin only once
 
-    if(optind < argc) {
-      char *fname;
-      bool pstdin = FALSE; //print from stdin only once
+    while(optind < argc) {
+    
+      fname = argv[optind++];
 
-      while (optind < argc) {
-        fname = argv[optind++];
-        
-        if ((strcmp(fname,"-")) == 0 && !pstdin) {
-          adv_print(stdin);
-          pstdin = TRUE;
-        }
-        else {
-
-          FILE *f = fopen(fname, "r");
-          check_file(fname, f);
-
-          adv_print(f);
-
-          fclose(f);
+      if ((strcmp(fname, "-") == 0) && !pstdin) {
       
-        }
+        print_stdout(stdin);
 
       }
+      else {
+        FILE *f = fopen(fname, "r");
+        check_file(fname, f);
+
+        if (TAB || LINE_NUM || LINE_ENDS || ALL) {
+          adv_print(f);
+        }
+        else {
+          print_stdout(f);   
+        }
+
+        fclose(f);
+      
+      }
+
+
     }
-    else {
-      adv_print(stdin); 
-    }
-  
-  
+
   }
   else {
-    if (optind < argc) {
-      char *fname;
-      bool pstdin = FALSE; // print from stdin only once
-
-      while(optind < argc) {
-        fname = argv[optind++];
-
-        if ((strcmp(fname,"-")) == 0 && !pstdin) {
-          print_stdout(stdin);
-          pstdin = TRUE;
-        }
-        else {
-
-          FILE *f = fopen(fname, "r");
-          check_file(fname, f);
-
-          print_stdout(f);
-
-          fclose(f);
-      
-        }
-
-      }
-    } 
-  
+    print_stdout(stdin);
+    return 0;
   }
 
 	return 0;
