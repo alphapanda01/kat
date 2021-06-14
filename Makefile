@@ -10,7 +10,7 @@ build:
 install: 
 	install bin/kat /usr/bin/
 
-tests: beta
+tests: kitty
 	./tests/run_tests.sh
 
 .PHONY: clean install
