@@ -1,5 +1,5 @@
 # Kat
-![version](https://img.shields.io/badge/version-0.7-green?style=flat&logo=GNU)
+![version](https://img.shields.io/badge/version-0.8.1-green?style=flat&logo=GNU)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/alphapanda01/kat/C%20CI)
 
 > My rip-off of GNU cat
