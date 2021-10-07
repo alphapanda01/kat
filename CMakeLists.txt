@@ -40,3 +40,13 @@ endfunction(do_test)
 
 do_test(kat "${CMAKE_CURRENT_SOURCE_DIR}/tests/saitama.txt")
 
+
+# CPack
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
+set(CPACK_PACKAGE_VERSION_MAJOR "${kat_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${kat_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${kat_VERSION_PATCH}")
+include(CPack)
+
+

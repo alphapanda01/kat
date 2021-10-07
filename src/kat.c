@@ -1,3 +1,11 @@
+/*
+ * This project is libre, and licenced under the terms of the
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE, version 3.1,
+ * as published by dtf on July 2019. See the COPYING file or
+ * https://ph.dtf.wtf/w/wtfpl/#version-3-1 for more details.
+ */
+
+
 #include <stdio.h>
 #include <unistd.h> // for getopt
 #include <getopt.h>
@@ -175,9 +183,13 @@ int main(int argc, char *argv[]) {
 }
 
 void print_version() {
-  printf("Kitty (My ripoff of cat) " TO_STRING(KAT_VERSION) "\n");
-  printf("\nCopyright(C) None\n");
-  printf("Written By: me\n");
+  printf("Kat(v" TO_STRING(KAT_VERSION)") - Print files to stdin\n");
+  printf("\nCopyright(C) WTFPL 3.1\n");
+  printf("This project is libre, and licenced under the terms of the\n"
+         "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE, version 3.1,\n"
+         "as published by dtf on July 2019. See the COPYING file or\n"
+         "https://ph.dtf.wtf/w/wtfpl/#version-3-1 for more details.\n");
+  printf("\nWritten By: me\n");
 }
 
 void print_help(char *exec_name) {

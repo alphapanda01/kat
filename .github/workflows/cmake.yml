@@ -20,4 +20,15 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/build
       run: ctest -C -VV
+
+    - name: CPack
+      working-directory: ${{github.workspace}}/build
+      run: sudo cpack -V
       
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Why-am-I-uploading-this
+        path: |
+          ${{github.workspace}}/build/*.tar.gz
+          ${{github.workspace}}/build/*.sh
+
