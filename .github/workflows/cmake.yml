@@ -31,4 +31,3 @@ jobs:
         path: |
           ${{github.workspace}}/build/*.tar.gz
           ${{github.workspace}}/build/*.sh
-
