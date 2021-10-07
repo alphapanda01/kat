@@ -15,7 +15,7 @@ jobs:
       run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build
       
     - name: Install
-      run: sudo make -C ${{github.workspace}}/ install
+      run: sudo make -C ${{github.workspace}}/build install
       
     - name: Test
       working-directory: ${{github.workspace}}/build
