@@ -1,9 +1,13 @@
 #!/bin/bash
 # No. of tests: 4 per file
 
+# Thinking of deleting this
+
+DIR=@CMAKE_CURRENT_SOURCE_DIR@
+
 echo "Running tests: "
 
-echo "" > tests/tests.log
+echo "" >> tests/tests.log
 
 if ! [ -x "$(command -v cat)" ]; then
     echo 'Error: cat is not installed.' >&2
@@ -12,7 +16,7 @@ fi
 
 tests=0
 
-for i in tests/*.txt
+for i in "${DIR}/tests/*.txt"
 do 
   # Normal print
   echo "test No.: $tests"

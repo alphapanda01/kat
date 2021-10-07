@@ -7,14 +7,12 @@
 //#include <sys/stat.h> // for dir check
 #include <errno.h>
 
-#include "KatConfig.h" // CMake config
-
 // An error macro
-#define err(A, ERRNUM, MSG, ...) if(!A || ERRNUM) {\
+#define err(A, ERRNUM, MSG, ...) if(ERRNUM || !A) {\
   fprintf(stderr,"[ERROR] " MSG ": %s\n", ##__VA_ARGS__, strerror(ERRNUM));\
   exit(1); }
 
-//#define KAT_VERSION "0.8.1"
+#define KAT_VERSION "0.8.1"
 
 // to fix few std C99 problem
 int getopt(int argc, char *const argv[], const char *optstring);
@@ -24,6 +22,9 @@ void print_version();
 
 void print_stdout(FILE *f,char *file_name); // prints the file to stdout
 void adv_print(FILE *f,char *file_name); // for more options
+
+//void check_file(char* file_path, FILE *f); // checks 
+//int isdirectory(char *path); 
 
 #ifndef bool
 typedef enum {FALSE, TRUE} bool;
@@ -75,10 +76,10 @@ int main(int argc, char *argv[]) {
 
       case 'v':
         print_version();
-        exit(0);
+        exit(1);
       case 'h':
         print_help(argv[0]);
-        exit(0);
+        exit(1);
       case 't':
         TAB = TRUE;
         break;
@@ -168,7 +169,7 @@ int main(int argc, char *argv[]) {
     // print from stdin
     else {
       print_stdout(stdin, "stdin");
-      err(0, errno, "stdin");
+      err(errno, errno, "stdin");
     }
 
   }
@@ -177,7 +178,7 @@ int main(int argc, char *argv[]) {
 }
 
 void print_version() {
-  printf("Kitty (My ripoff of cat) " TO_STRING(KAT_VERSION) "\n");
+  printf("Kitty (My ripoff of cat) %s\n",KAT_VERSION);
   printf("\nCopyright(C) None\n");
   printf("Written By: me\n");
 }
@@ -206,7 +207,7 @@ void print_stdout(FILE *f,char *file_name) {
     // test
     err(c,errno,"%s",file_name);
     
-    // break at end of file
+    //
     if(c == EOF) break;
 
     // print the char
@@ -230,8 +231,6 @@ void adv_print(FILE *f,char *file_name)  {
     c = fgetc(f);
 
     err(c, errno, "%s",file_name);
-
-    // break at end of file
     if(c == EOF) break;
 
 
