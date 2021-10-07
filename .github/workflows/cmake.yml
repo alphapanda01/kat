@@ -2,7 +2,7 @@ name: CMake tests
 
 on:
   push:
-    branches: [ cmake ]
+    branches: [ main ]
 
 jobs:
   build:
