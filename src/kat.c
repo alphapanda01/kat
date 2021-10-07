@@ -14,8 +14,6 @@
   fprintf(stderr,"[ERROR] " MSG ": %s\n", ##__VA_ARGS__, strerror(ERRNUM));\
   exit(1); }
 
-//#define KAT_VERSION "0.8.1"
-
 // to fix few std C99 problem
 int getopt(int argc, char *const argv[], const char *optstring);
 
