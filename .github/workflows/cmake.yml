@@ -11,12 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Configure CMake
-      run: cmake -C ${{github.workspace}}/build 
+    - name: Configure and Build CMake
+      run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build
       
-    - name: Build
-      run: cmake --build ${{github.workspace}}/build 
-    
     - name: Install
       run: sudo make -C ${{github.workspace}}/ install
       
