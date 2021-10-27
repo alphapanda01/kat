@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.21.3)
 
+include(CheckFunctionExists)
+
 project(kat VERSION 0.8.1 LANGUAGES C)
 
 if(MSVC)
@@ -7,6 +9,20 @@ if(MSVC)
 else()
   add_compile_options(-Wall -Wextra -O3)
 endif()
+
+# function checks
+function(check_func func_name var)
+  check_function_exists(${func_name} ${var})
+  if(NOT ${var})
+    set(${var} 0 PARENT_SCOPE)
+  else()
+    set(${var} 1 PARENT_SCOPE)
+  endif()
+endfunction()
+
+# checks
+check_func(getopt_long GETOPT_LONG_EXISTS)
+check_func(fprintf FPRINTF_EXISTS)
 
 file(GLOB Kat_SRC "src/*.c")
 

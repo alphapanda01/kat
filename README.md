@@ -21,7 +21,7 @@ OPTIONS:
 
 ```
 
-## Install CMake
+## Install(CMake)
 
 ### From Source
 #### 1. GUI

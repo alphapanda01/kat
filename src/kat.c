@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
 }
 
 void print_version() {
-  printf("Kat(v" TO_STRING(KAT_VERSION)") - Print files to stdin\n");
+  printf("Kat(v"KAT_VERSION") - Print files to stdin\n");
   printf("\nCopyright(C) WTFPL 3.1\n");
   printf("This project is libre, and licenced under the terms of the\n"
          "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE, version 3.1,\n"
