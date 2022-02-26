@@ -7,7 +7,6 @@
 
 
 #include <stdio.h>
-#include <unistd.h> // for getopt
 #include <getopt.h>
 #include <stdlib.h> // for abort() exit() 
 #include <string.h> // for strcmp()
@@ -20,32 +19,44 @@
 // An error macro
 #define err(A, ERRNUM, MSG, ...) if(!A || ERRNUM) {\
   fprintf(stderr,"[ERROR] " MSG ": %s\n", ##__VA_ARGS__, strerror(ERRNUM));\
-  exit(1); }
-
-// to fix few std C99 problem
-int getopt(int argc, char *const argv[], const char *optstring);
+  exit(1);\
+}
 
 void print_help(char *exec_name); 
 void print_version();
 
 void print_stdout(FILE *f,char *file_name); // prints the file to stdout
-void adv_print(FILE *f,char *file_name); // for more options
+void adv_print(FILE *f, char *file_name, int style); // for more options
 
 #ifndef bool
-typedef enum {FALSE, TRUE} bool;
+  typedef enum {FALSE, TRUE} bool;
 #endif
 
 // The hated global vairables
+/* Need to change this
 bool TAB = FALSE;
 bool LINE_NUM = FALSE;
 bool LINE_ENDS = FALSE;
 bool ALL = FALSE;
+*/
+
+/* Style
+ *
+ * NONE       = 0000
+ * TAB        = 0001
+ * LINE_END   = 0010
+ * LINE_NUM   = 0100
+ * ALL        = 0111
+ *
+ */
 
 int main(int argc, char *argv[]) {
 
   int c;
 
-  bool pstdin = FALSE; // print from stdin only once
+  bool pstdin = FALSE; // print from stdin (only once)
+
+  int  style  = 0;
 
   while(1) {
 
@@ -86,16 +97,20 @@ int main(int argc, char *argv[]) {
         print_help(argv[0]);
         exit(0);
       case 't':
-        TAB = TRUE;
+        //TAB = TRUE;
+        style |= (1 << 0); // 0001
         break;
       case 'e':
-        LINE_ENDS = TRUE;
+        //LINE_ENDS = TRUE;
+        style |= (1 << 1); // 0010
         break;
       case 'n':
-        LINE_NUM = TRUE;
+        //LINE_NUM = TRUE;
+        style |= (1 << 2); // 0100
         break;
       case 'A':
-        ALL = TRUE;
+        //ALL = TRUE;
+        style |= 8; // 0111
         break;
       case '?':
         break;
@@ -107,8 +122,8 @@ int main(int argc, char *argv[]) {
 
   }
 
-  // if args are given
-  if (TAB || LINE_NUM || LINE_ENDS || ALL) {
+  // if style args are given
+  if (style) {
     
     // print the files with the args
     if(optind < argc) {
@@ -119,7 +134,7 @@ int main(int argc, char *argv[]) {
 
         // - => Take input from stdin only once
         if ((strcmp(fname,"-")) == 0 && !pstdin) {
-          adv_print(stdin,"stdin");
+          adv_print(stdin,"stdin", style);
           pstdin = TRUE;
         }
         else {
@@ -128,7 +143,7 @@ int main(int argc, char *argv[]) {
           err(f,errno,"%s",fname);
           //check_file(fname, f);
 
-          adv_print(f, fname);
+          adv_print(f, fname, style);
 
           fclose(f);
 
@@ -138,8 +153,8 @@ int main(int argc, char *argv[]) {
     }
     // if no files are given, print from stdin
     else {
-      adv_print(stdin,"stdin"); 
-      err(0,errno, "stdin");
+      adv_print(stdin,"stdin", style); 
+      err(1,errno, "stdin");
     }
 
 
@@ -155,7 +170,7 @@ int main(int argc, char *argv[]) {
 
         if ((strcmp(fname,"-")) == 0 && !pstdin) {
           print_stdout(stdin, "stdin");
-          err(0,errno,"stdin");
+          err(1,errno,"stdin");
           pstdin = TRUE;
         }
         else {
@@ -174,7 +189,7 @@ int main(int argc, char *argv[]) {
     // print from stdin
     else {
       print_stdout(stdin, "stdin");
-      err(0, errno, "stdin");
+      err(1, errno, "stdin");
     }
 
   }
@@ -210,6 +225,8 @@ void print_stdout(FILE *f,char *file_name) {
 
   int c;
 
+  printf("File: %s\n", file_name);
+
   while(TRUE) {
     c = fgetc(f); // get char
 
@@ -225,16 +242,22 @@ void print_stdout(FILE *f,char *file_name) {
 
 }
 
-void adv_print(FILE *f,char *file_name)  {
+void adv_print(FILE *f,char *file_name, int style)  {
 
   int c;
   int i;
 
+  printf("File: %s\n", file_name);
+
   int numline = 0; //to print number in front of a line if equal to 1
-  if (LINE_NUM) {
+  if ((style & (1 << 2))) { // Get the line_num bit
     i = 1;
     numline = 1;
   }
+  bool TAB        = (style & (1 << 0));
+  bool LINE_ENDS  = (style & (1 << 1));
+  bool LINE_NUM   = (style & (1 << 2));
+  bool ALL        = (style & 8);
 
   while(TRUE) {
     c = fgetc(f);

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21.3)
 
 include(CheckFunctionExists)
 
-project(kat VERSION 0.8.1 LANGUAGES C)
+project(kat VERSION 0.9 LANGUAGES C)
 
 if(MSVC)
   message(FATAL_ERROR "Doesn't work in MSVC yet")
